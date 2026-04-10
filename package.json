@@ -1,6 +1,7 @@
 {
   "name": "control-vehicular",
   "version": "1.0.0",
+  "description": "API REST para sistema de acceso vehicular",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -11,13 +12,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "helmet": "^8.1.0",
-    "morgan": "^1.10.1",
-    "pg": "^8.20.0"
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.1.1",
+    "pg": "^8.12.0",
+    "qrcode": "^1.5.4"
   }
 }
