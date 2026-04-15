@@ -152,3 +152,23 @@ export const refresh = async (req, res) => {
         return res.status(401).json({ error: 'Refresh token inválido o expirado' })
     }
 }
+
+// ─── GET /api/auth/me ─────────────────────────────────────────────────────────
+// Verifica si hay sesión activa y devuelve los datos básicos del usuario.
+// El frontend lo usa al cargar cada página protegida para verificar
+// que el token sigue siendo válido antes de mostrar el contenido.
+export const me = async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT nombre, apellido, rol FROM sistema_usuarios WHERE sistema_uid = $1`,
+            [req.usuario.sistema_uid]
+        )
+        if (result.rows.length === 0) {
+            return res.status(401).json({ error: 'Usuario no encontrado' })
+        }
+        res.json({ usuario: result.rows[0] })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: 'Error interno del servidor' })
+    }
+}

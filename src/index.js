@@ -10,7 +10,14 @@ import adminRoutes from './routes/admin.routes.js'
 import guardiaRoutes from './routes/guardia.routes.js'
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5500
+
+// Forzar UTF-8 en todas las respuestas JSON para que los acentos
+// y caracteres especiales del español se muestren correctamente
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    next()
+})
 
 // ─── CORS ────────────────────────────────────────────────────────────────────
 // Configuración de CORS para permitir solicitudes desde el frontend 
@@ -19,7 +26,7 @@ const PORT = process.env.PORT || 3000
 app.use(cors({
     origin: process.env.NODE_ENV === 'production'
         ? process.env.FRONTEND_URL
-        : 'http://localhost:5173', 
+        : 'http://localhost:5500',
     credentials: true, // Permite enviar cookies (JWT) en solicitudes CORS
 }))
 

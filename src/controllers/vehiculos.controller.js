@@ -136,7 +136,7 @@ export const crearVehiculo = async (req, res) => {
     else { const e = validar('placa', placa.toUpperCase(), patterns.placa); if (e) errores.push(e) }
 
     // Todos los documentos requeridos al crear
-    ;['ine', 'licencia', 'poliza', 'tarjeta', 'responsiva'].forEach(doc => {
+    ;['licencia', 'poliza', 'tarjeta', 'responsiva'].forEach(doc => {
         if (!files[doc]) errores.push(`El documento '${doc}' es requerido`)
     })
 
@@ -164,14 +164,14 @@ export const crearVehiculo = async (req, res) => {
         const vehiculo_id = vehiculoResult.rows[0].vehiculo_id
 
         // 3. Generar QR automáticamente
-        const qrBuffer = await QRCode.toBuffer(vehiculo_id, { type: 'png', width: 300 })
+        const qrBuffer = await QRCode.toBuffer(placa.toUpperCase(), { type: 'png', width: 300 })
         const qrUpload = await subirBuffer(qrBuffer, {
             folder: carpeta(vehiculo_id), public_id: 'qr', format: 'png',
         })
 
         // 4. Subir todos los documentos
         const camposMap = {
-            ine: 'ine_url', licencia: 'licencia_url', poliza: 'poliza_seguro_url',
+            licencia: 'licencia_url', poliza: 'poliza_seguro_url',
             tarjeta: 'tarjeta_circulacion_url', responsiva: 'responsiva_url',
         }
         const docUpdates = { qr_url: qrUpload.secure_url }
@@ -284,7 +284,7 @@ export const editarVehiculo = async (req, res) => {
 
         // Si llegan nuevos archivos, los subimos a Cloudinary y actualizamos las URLs en la tabla documentos_vehiculo.
         const camposMap = {
-            ine: 'ine_url', licencia: 'licencia_url', poliza: 'poliza_seguro_url',
+            licencia: 'licencia_url', poliza: 'poliza_seguro_url',
             tarjeta: 'tarjeta_circulacion_url', responsiva: 'responsiva_url',
         }
         const docUpdates = {}
