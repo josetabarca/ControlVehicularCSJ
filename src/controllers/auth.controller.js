@@ -15,7 +15,7 @@ import pool from '../config/db.js'
 const cookieOpts = (maxAge) => ({
     httpOnly: true, // No accesible desde JavaScript del cliente
     secure: process.env.NODE_ENV === 'production', // Solo se envía por HTTPS en producción
-    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax', // Protección CSRF
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Permitir cookies en cross-site en producción (Render) y usar lax en desarrollo local
     maxAge, // Duración de la cookie en milisegundos
 })
 
