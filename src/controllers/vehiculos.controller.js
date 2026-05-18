@@ -352,7 +352,7 @@ export const eliminarVehiculo = async (req, res) => {
         await client.query('COMMIT')
 
         // Eliminamos la carpeta completa del vehículo en Cloudinary, incluyendo el QR y todos los documentos.
-        eliminarCarpeta(vehiculo_id)
+        await eliminarCarpeta(vehiculo_id)
 
         res.json({ mensaje: 'Registro eliminado correctamente' })
     } catch (err) {
